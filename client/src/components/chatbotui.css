@@ -1,0 +1,42 @@
+.chatbot-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  
+  .messages {
+    flex-grow: 1;
+    overflow-y: auto;
+  }
+  
+  .input-area {
+    display: flex;
+    margin-top: auto;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+  }
+  
+  .input-field {
+    flex-grow: 1;
+    margin-right: 10px;
+    padding: 5px;
+    height: 100px; /* Adjust this value to change the height of the textarea */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    resize: none; /* This prevents the user from resizing the textarea */
+  }
+  
+  button {
+    padding: 5px 10px;
+    border: none;
+    background: white;
+    color: black;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+  
+  button:hover {
+    background: white;
+    color: teal;
+  }
+  

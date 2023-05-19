@@ -1,0 +1,76 @@
+.app-container {
+  display: flex;
+  font-family: Arial, sans-serif;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.placeholder {
+  flex: 0.2;
+  padding: 20px;
+  border-right: 1px solid #ddd;
+}
+
+.code-preview-container {
+  flex: 0.8;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.tabs {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  padding: 10px 20px;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: none;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.tabs button:hover {
+  border-bottom: 2px solid #333;
+  color:teal
+}
+
+.tabs button.active {
+  border-bottom: 2px solid #333;
+}
+
+.code-editors {
+  display: flex;
+  justify-content: space-between;
+}
+
+.code-editors > div {
+  flex: 1;
+  min-width: 0;
+}
+
+.html-editor,
+.css-editor,
+.js-editor {
+  width: calc(100% / 3 - 10px);
+  margin-right: 10px;
+}
+
+.html-editor label,
+.css-editor label,
+.js-editor label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.preview {
+  width: 100%;
+  height: calc(100% - 40px);
+  border: 1px solid #ddd;
+}

@@ -1,0 +1,26 @@
+{
+  "name": "ui-chat",
+  "version": "1.0.0",
+  "description": "An natural language interface for frontend development",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server/dist/index.js",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "build": "npm run build:client && npm run build:server",
+    "dev:client": "cd client && npm start",
+    "dev:server": "cd server && npm run dev",
+    "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aditya-pethe/ui-chat.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aditya-pethe/ui-chat/issues"
+  },
+  "homepage": "https://github.com/aditya-pethe/ui-chat#readme"
+}
