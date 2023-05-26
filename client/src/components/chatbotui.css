@@ -3,6 +3,31 @@
     flex-direction: column;
     height: 100%;
   }
+
+  .chatbotContainer .inputArea textarea {
+    font-size: 20px;  /* adjust to your preference */
+    /* other styles as before */
+  }
+
+  .userMessage {
+    margin-left: auto;
+    background-color: #008080;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    width: fit-content;
+    margin-bottom: 10px;
+  }
+
+  .botMessage {
+    margin-right: auto;
+    background-color: #D3D3D3; /* Light gray, adjust as desired */
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+    width: fit-content;
+    margin-bottom: 10px;
+  }
   
   .messages {
     flex-grow: 1;

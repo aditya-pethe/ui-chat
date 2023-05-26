@@ -1,0 +1,11 @@
+.code-editors {
+    display: flex;
+    overflow: auto;
+  }
+
+.editor {
+    flex: 1 1 33.3333%;
+    margin: 1px;
+    overflow: auto;
+    min-width: 0;
+}

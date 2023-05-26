@@ -1,35 +1,77 @@
-import React, { useState } from 'react';
-import './chatbotui.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from "react";
+import "./chatbotui.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
 
-const Chatbot: React.FC = () => {
-  const [input, setInput] = useState('');
-  const [messages, setMessages] = useState<string[]>([]);
+interface Message {
+  sender: "user" | "bot";
+  text: string;
+}
+
+interface ChatbotUIProps {
+  fetchAndUpdateCode: () => void;
+  htmlCode: string;
+  cssCode: string;
+  jsCode: string;
+}
+
+const Chatbot: React.FC<ChatbotUIProps> = ({ fetchAndUpdateCode, htmlCode, cssCode, jsCode }) => {
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(event.target.value);
   };
 
-  const handleSend = () => {
-    setMessages(prevMessages => [...prevMessages, input]);
-    setInput('');
+  const handleSendMessage = async () => {
+    if (input.trim() !== "") {
+      const userMessage: Message = { sender: "user", text: input.trim() }; // Add : Message here
+      setMessages([...messages, userMessage]);
+      setInput("");
+
+      const clientCode = {html:htmlCode, css:cssCode, js:jsCode};
+
+      const response = await fetch("/chat", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: userMessage.text, code: clientCode}),
+      });
+
+      const data = await response.json();
+      console.log(data.message);
+
+      // After the response from the server is received, add the bot's message
+      setMessages((prevMessages) => [
+        ...prevMessages,
+        { sender: "bot", text: data.message } as Message,
+      ]);
+
+      fetchAndUpdateCode();
+    }
   };
+
+  // You no longer need to add the bot's message in this useEffect hook
+  useEffect(() => {}, [messages]);
 
   return (
     <div className="chatbot-container">
-      <div className="messages">
-        {messages.map((message, index) => (
-          <div key={index}>{message}</div>
-        ))}
-      </div>
+      {messages.map((message, index) => (
+        <div
+          key={index}
+          className={message.sender === "user" ? "userMessage" : "botMessage"}
+        >
+          {message.text}
+        </div>
+      ))}
       <div className="input-area">
         <textarea
           value={input}
           onChange={handleInputChange}
           className="input-field"
         />
-        <button onClick={handleSend}>
+        <button onClick={handleSendMessage}>
           <FontAwesomeIcon icon={faPaperPlane} size="lg" />
         </button>
       </div>
