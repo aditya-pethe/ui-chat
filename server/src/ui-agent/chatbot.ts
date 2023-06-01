@@ -14,27 +14,28 @@ import {
 } from "langchain/agents";
 import { BufferMemory } from "langchain/memory";
 import { Tool, DynamicTool } from "langchain/tools";
-import { CodeWriterTool } from "./codetool";
+import {CodePreviewTool} from "./tool";
 import * as dotenv from "dotenv";
 
 dotenv.config();
-const apiKey = process.env.OPENAI_API_KEY;
 
 export class Chatbot {
   private agent!: AgentExecutor;
   private chat: ChatOpenAI;
   private chain: ConversationChain;
   private memory: BufferMemory;
-  private tools: Array<DynamicTool>;
+  private tools: Array<Tool>;
+  protected apiKey: string;
 
   constructor() {
-    this.chat = new ChatOpenAI({ openAIApiKey: apiKey, temperature: 0 });
+    this.apiKey = process.env.OPENAI_API_KEY!;
+    this.chat = new ChatOpenAI({ openAIApiKey: this.apiKey, temperature: 0 });
     this.memory = new BufferMemory();
     this.chain = new ConversationChain({
       memory: this.memory,
       llm: this.chat,
     });
-    this.tools = [];
+    this.tools = [new CodePreviewTool()];
     this.initAgent();
   }
 
@@ -50,7 +51,7 @@ export class Chatbot {
   }
 
   async run(userMessage: string) {
-    const response = await this.chain.call({
+    const response = await this.agent.call({
       input: userMessage,
     });
 

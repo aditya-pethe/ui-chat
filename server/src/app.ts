@@ -26,7 +26,6 @@ const cb = new Chatbot();
 app.use(express.json()); // for parsing application/json
 
 app.post("/chat", async (req, res) => {
-
   const userMessage = req.body.message;
   const code = req.body.code;
 
@@ -35,7 +34,7 @@ app.post("/chat", async (req, res) => {
 
   try {
     const botReply = await cb.run(userMessage);
-    res.json({ message: botReply.response });
+    res.json({ message: botReply.output });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error occurred while processing your message");

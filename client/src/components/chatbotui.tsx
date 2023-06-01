@@ -15,7 +15,12 @@ interface ChatbotUIProps {
   jsCode: string;
 }
 
-const Chatbot: React.FC<ChatbotUIProps> = ({ fetchAndUpdateCode, htmlCode, cssCode, jsCode }) => {
+const Chatbot: React.FC<ChatbotUIProps> = ({
+  fetchAndUpdateCode,
+  htmlCode,
+  cssCode,
+  jsCode,
+}) => {
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
 
@@ -29,14 +34,14 @@ const Chatbot: React.FC<ChatbotUIProps> = ({ fetchAndUpdateCode, htmlCode, cssCo
       setMessages([...messages, userMessage]);
       setInput("");
 
-      const clientCode = {html:htmlCode, css:cssCode, js:jsCode};
+      const clientCode = { html: htmlCode, css: cssCode, js: jsCode };
 
       const response = await fetch("/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: userMessage.text, code: clientCode}),
+        body: JSON.stringify({ message: userMessage.text, code: clientCode }),
       });
 
       const data = await response.json();
