@@ -28,7 +28,8 @@ dotenv.config();
 
 export class CodePreviewTool extends Tool {
   name = "CodePreviewTool";
-  description = "This tool helps to preview the code based on user requests. Input should be the user's exact request";
+  description = `This tool helps to preview a website based on user requests. Whenever a user asks you for code, call this tool.
+   Input should be the user's exact request`;
 
   protected apiKey: string;
   private html: string;
