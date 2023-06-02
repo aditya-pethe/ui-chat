@@ -37,6 +37,7 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
       setIsLoading(true);
 
       const clientCode = { html: htmlCode, css: cssCode, js: jsCode };
+      const startTime = Date.now();
 
       const response = await fetch("/chat", {
         method: "POST",
@@ -46,13 +47,18 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
         body: JSON.stringify({ message: userMessage.text, code: clientCode }),
       });
 
+      const endTime = Date.now();
+
       const data = await response.json();
       console.log(data.message);
+
+      const timeElapsed = (endTime - startTime) / 1000;
+      const newMessage = `${data.message}. Time elapsed: ${timeElapsed} seconds`;
 
       // After the response from the server is received, add the bot's message
       setMessages((prevMessages) => [
         ...prevMessages,
-        { sender: "bot", text: data.message } as Message,
+        { sender: "bot", text: newMessage } as Message,
       ]);
 
       fetchAndUpdateCode();

@@ -4,7 +4,8 @@ import { html } from "@codemirror/lang-html";
 import { css } from "@codemirror/lang-css";
 import { javascript } from "@codemirror/lang-javascript";
 import CodeMirror from "@uiw/react-codemirror";
-import "./editor.css";
+// import "./editor.css";
+import "../App.css";
 
 interface EditorProps {
   language: "html" | "css" | "js";
@@ -32,14 +33,16 @@ const Editor: React.FC<EditorProps> = ({ language, code, setCode }) => {
 
   return (
     <div className="editor">
-      {label}
-      <CodeMirror
-        theme={aura}
-        height="1000px"
-        value={code}
-        extensions={[languageExtension]}
-        onChange={(value) => setCode(value)}
-      />
+      <div className="label">{label}</div>
+      <div className="editor-content">
+        <CodeMirror
+          theme={aura}
+          height="1000px"
+          value={code}
+          extensions={[languageExtension]}
+          onChange={(value) => setCode(value)}
+        />
+      </div>
     </div>
   );
 };

@@ -1,17 +1,34 @@
-.code-editors {
+/* .code-editors {
     display: flex;
     overflow: auto;
   }
 
-/* .editor {
+.editor {
     flex: 1 1 33.3333%;
     margin: 1px;
     overflow: auto;
     min-width: 0;
-} */
+}
+
+.code-preview-container {
+  flex: 0 0 70%;
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  box-sizing: border-box;
+}
+.code-editors {
+  display: flex;
+  overflow: auto;
+  width: 100%;  
+
+} 
 
 .editor {
-  flex: 1 1 0;
+  flex: 1 1 33.3333%;
+  margin: 1px;
   overflow: auto;
   min-width: 0;
-}
+} 
+*/
+

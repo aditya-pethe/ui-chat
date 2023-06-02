@@ -20,21 +20,35 @@
   display: flex;
   flex-direction: column;
   padding: 0px;
+  width: 70%;
   box-sizing: border-box;
 }
 .code-editors {
+  box-sizing: border-box;
   display: flex;
   overflow: auto;
-  width: 100%; /* or another value that fits your layout */
-
-}
+  width: 100%;  /* or another value that fits your layout */
+} 
 
 .editor {
+  flex: 1 1 33.3333%;
+  min-width: 0;
+}
+
+.editor-content {
   flex: 1 1 33.3333%;
   margin: 1px;
   overflow: auto;
   min-width: 0;
+  height: 100%;
 }
+
+.label {
+  color:teal;
+  font-size: 1em;
+  font-weight: bold;
+}
+
 .preview {
   width: 100%;
   height: calc(100% - 40px);
@@ -44,6 +58,7 @@
 .tabs {
   display: flex;
   margin-bottom: 20px;
+  width: 100%;
 }
 
 .tabs button {

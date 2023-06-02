@@ -10,7 +10,7 @@ function App() {
   const [htmlCode, setHtmlCode] = useState<string>(exampleHtml);
   const [cssCode, setCssCode] = useState<string>(exampleCss);
   const [jsCode, setJsCode] = useState<string>(exampleJs);
-  const [activeTab, setActiveTab] = useState<"code" | "preview">("code");
+  const [activeTab, setActiveTab] = useState<"code" | "preview">("preview");
 
   const fetchCode = async () => {
     try {
@@ -51,7 +51,6 @@ function App() {
   </html>
   `;
 
-  
   return (
     <div className="app-container">
       <div className="placeholder">
