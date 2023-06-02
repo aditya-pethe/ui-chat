@@ -9,7 +9,7 @@ const exampleHtml = `
 </head>
 <body>
     <div class="container">
-        <h1 class="header">Talk to me to design your website</h1>
+        <h1 class="header">Hi! Talk to me to design your website</h1>
     </div>
     <script src="script.js"></script>
 </body>
@@ -23,7 +23,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    background-color: lavender;
+    background-color: black;
     font-family: Arial, sans-serif;
 }
 
@@ -32,8 +32,26 @@ body {
 }
 
 .header {
-    color: #333;
-    font-size: 2em;
+    /* existing styles */
+    color: teal;
+    font-size: 3em;
+    font-weight: bold;
+
+    /* new styles for typing effect */
+    white-space: pre; /* preserve spaces and line breaks */
+    overflow: hidden; /* hide the text until it's typed */
+    border-right: .15em solid orange; /* cursor */
+    animation: typing 4s steps(30, end), blink-caret .75s step-end infinite;
+}
+
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: orange; }
 }
 `;
 

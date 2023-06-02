@@ -3,9 +3,15 @@
     overflow: auto;
   }
 
-.editor {
+/* .editor {
     flex: 1 1 33.3333%;
     margin: 1px;
     overflow: auto;
     min-width: 0;
+} */
+
+.editor {
+  flex: 1 1 0;
+  overflow: auto;
+  min-width: 0;
 }

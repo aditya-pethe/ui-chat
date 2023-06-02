@@ -35,7 +35,7 @@ const Editor: React.FC<EditorProps> = ({ language, code, setCode }) => {
       {label}
       <CodeMirror
         theme={aura}
-        height="80rem"
+        height="1000px"
         value={code}
         extensions={[languageExtension]}
         onChange={(value) => setCode(value)}
