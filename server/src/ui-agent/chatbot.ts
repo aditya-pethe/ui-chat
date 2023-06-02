@@ -14,7 +14,7 @@ import {
 } from "langchain/agents";
 import { BufferMemory } from "langchain/memory";
 import { Tool, DynamicTool } from "langchain/tools";
-import {CodePreviewTool} from "./tool";
+import { CodePreviewTool } from "./tool";
 import * as dotenv from "dotenv";
 
 dotenv.config();

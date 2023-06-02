@@ -35,14 +35,23 @@ function App() {
     setJsCode(js || "");
   };
 
-  const srcDoc = `
-    <html>
-      <body>${htmlCode}</body>
-      <style>${cssCode}</style>
-      <script>${jsCode}</script>
-    </html>
+  const wrappedJsCode = `
+  document.addEventListener('DOMContentLoaded', (event) => {
+      ${jsCode}
+  });
   `;
 
+  const srcDoc = `
+  <html>
+    <head>
+      <style>${cssCode}</style>
+      <script>${wrappedJsCode}</script>
+    </head>
+    <body>${htmlCode}</body>
+  </html>
+  `;
+
+  
   return (
     <div className="app-container">
       <div className="placeholder">

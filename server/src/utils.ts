@@ -1,5 +1,5 @@
 import fs, { read, writeFileSync } from "fs";
-import {CodePreviewTool } from "./ui-agent/tool";
+import { CodePreviewTool } from "./ui-agent/tool";
 import path from "path";
 
 export function readCodeState() {
@@ -22,7 +22,6 @@ export function writeCodeFiles(html: string, css: string, js: string) {
   fs.writeFileSync(cssPath, css);
   fs.writeFileSync(jsPath, js);
 }
-
 
 // const codePreviewTool = new CodePreviewTool();
 // const res = codePreviewTool._call("make me a simple landing page for a personal website");

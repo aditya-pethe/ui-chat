@@ -10,7 +10,7 @@ import { readCodeState, writeCodeFiles } from "../utils";
 import { uiChatPrompt, parser } from "./prompt";
 import * as dotenv from "dotenv";
 import { LLMChain } from "langchain/chains";
-import {OutputFixingParser } from "langchain/output_parsers";
+import { OutputFixingParser } from "langchain/output_parsers";
 
 dotenv.config();
 
@@ -44,8 +44,12 @@ export class CodePreviewTool extends Tool {
     this.html = code.html;
     this.css = code.css;
     this.js = code.js;
-    this.apiKey = process.env.OPENAI_API_KEY!
-    this.chat = new ChatOpenAI({ openAIApiKey: this.apiKey, temperature: 0});
+    this.apiKey = process.env.OPENAI_API_KEY!;
+    this.chat = new ChatOpenAI({
+      openAIApiKey: this.apiKey,
+      temperature: 0,
+      modelName: "gpt-4",
+    });
 
     // this.outputParser = OutputFixingParser.fromLLM(
     //   this.chat,
@@ -53,28 +57,26 @@ export class CodePreviewTool extends Tool {
     // )
   }
 
-  parseOutput(raw:string){
-    
-    let cleaned = raw.replace(/\s*(html:|css:|js:)\s*/,"\n");
+  parseOutput(raw: string) {
+    let cleaned = raw.replace(/\s*(html:|css:|js:)\s*/, "\n");
     let result = cleaned.split("```");
-    let extra_chars = /\s*(html\n|css\n|js\n)\s*/;
+    let extra_chars = /\s*(html\n|css\n|js\n|\nhtml|\ncss|\njs)\s*/;
     /*
     now result is - 
     [\n,code,\n,code,\n,code]
      */
-    const htmlCode = result[1].replace(extra_chars,"").trimStart()
-    const cssCode = result[3].replace(extra_chars,"").trimStart()
-    const jsCode = result[5].replace(extra_chars,"").trimStart()
+    const htmlCode = result[1].replace(extra_chars, "").trimStart();
+    const cssCode = result[3].replace(extra_chars, "").trimStart();
+    const jsCode = result[5].replace(extra_chars, "").trimStart();
 
-      const obj = {
-        html:htmlCode,
-        css:cssCode,
-        js:jsCode
-    }
+    const obj = {
+      html: htmlCode,
+      css: cssCode,
+      js: jsCode,
+    };
 
-    console.log(obj)
+    console.log(obj);
     return obj;
-
   }
 
   async _call(input: string): Promise<string> {
@@ -87,16 +89,18 @@ export class CodePreviewTool extends Tool {
     this.css = code.css;
     this.js = code.js;
 
+    console.log(input);
+
     const res = this.chat.generatePrompt([
       await uiChatPrompt.formatPromptValue({
         input: input,
         html: this.html,
         css: this.css,
-        js: this.js
-      })
-    ])
+        js: this.js,
+      }),
+    ]);
 
-    const generation = (await res).generations[0][0].text
+    const generation = (await res).generations[0][0].text;
     // console.log(generation);
     const generatedCode = this.parseOutput(generation);
     writeCodeFiles(generatedCode.html, generatedCode.css, generatedCode.js);
@@ -104,5 +108,3 @@ export class CodePreviewTool extends Tool {
     return "I modified the code based on your requests - let me know if you have questions!";
   }
 }
-
-

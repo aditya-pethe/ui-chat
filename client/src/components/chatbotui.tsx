@@ -25,7 +25,6 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(event.target.value);
   };
@@ -36,7 +35,6 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
       setMessages([...messages, userMessage]);
       setInput("");
       setIsLoading(true);
-
 
       const clientCode = { html: htmlCode, css: cssCode, js: jsCode };
 
@@ -59,7 +57,6 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
 
       fetchAndUpdateCode();
       setIsLoading(false);
-
     }
   };
 
@@ -76,7 +73,7 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
           {message.text}
         </div>
       ))}
-      {isLoading && <div className="loading">Loading...</div>}
+      {isLoading && <div className="loading"></div>}
       <div className="input-area">
         <textarea
           value={input}

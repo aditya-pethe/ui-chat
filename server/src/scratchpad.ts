@@ -1,18 +1,20 @@
 // file for testing other modules in a not formalized / diagnositic way
 import { CodePreviewTool } from "./ui-agent/tool";
-import {uiChatPrompt} from "./ui-agent/prompt";
+import { uiChatPrompt } from "./ui-agent/prompt";
 
 // tool testing
 const cp = new CodePreviewTool();
-const primaryPrompt = "Please write me a simple landing page for a personal website";
-const secondaryPrompt = "Can you format it nicer? Use a better color palette and space things out better";
+const primaryPrompt =
+  "Please write me a simple landing page for a personal website";
+const secondaryPrompt =
+  "Can you format it nicer? Use a better color palette and space things out better";
 const jsPrompt = "Modify the javascript to have a simple animation on the page";
 
 async function testCodePreview() {
-    console.time("CodePreviewTool Execution Time"); // Start timer
-    const res = await cp.call(primaryPrompt);
-    // parseCode(res);
-    console.timeEnd("CodePreviewTool Execution Time"); // End timer and print the duration
+  console.time("CodePreviewTool Execution Time"); // Start timer
+  const res = await cp.call(primaryPrompt);
+  // parseCode(res);
+  console.timeEnd("CodePreviewTool Execution Time"); // End timer and print the duration
 }
 /*
 Normal Execution: 1:27.420
@@ -139,22 +141,21 @@ footer li a {
 }
 
 js:
-`
+`;
 
-function parseCode(raw:string){
-    let result = raw.split(/\s*(html:|css:|js:|HTML:|CSS:|JS:)\s*/);
-    const intro = result[0];
-    const htmlCode = result[2];
-    const cssCode = result[4];
-    const jsCode = result[6];
+function parseCode(raw: string) {
+  let result = raw.split(/\s*(html:|css:|js:|HTML:|CSS:|JS:)\s*/);
+  const intro = result[0];
+  const htmlCode = result[2];
+  const cssCode = result[4];
+  const jsCode = result[6];
 
-    const obj = {
-        intro:intro,
-        html:htmlCode,
-        css:cssCode,
-        js:jsCode
-    }
+  const obj = {
+    intro: intro,
+    html: htmlCode,
+    css: cssCode,
+    js: jsCode,
+  };
 
-    console.log(obj);
+  console.log(obj);
 }
-

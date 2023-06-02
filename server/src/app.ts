@@ -12,6 +12,7 @@ import {
 
 import dotenv from "dotenv";
 import { Chatbot } from "./ui-agent/chatbot";
+import { CodePreviewTool } from "./ui-agent/tool";
 import { readCodeState, writeCodeFiles } from "./utils";
 import fs from "fs";
 import path from "path";
@@ -22,7 +23,7 @@ const app = express();
 const port = 2000;
 const apiKey = process.env.OPENAI_API_KEY;
 
-const cb = new Chatbot();
+const cb = new CodePreviewTool();
 app.use(express.json()); // for parsing application/json
 
 app.post("/chat", async (req, res) => {
@@ -33,8 +34,8 @@ app.post("/chat", async (req, res) => {
   writeCodeFiles(code.html, code.css, code.js);
 
   try {
-    const botReply = await cb.run(userMessage);
-    res.json({ message: botReply.output });
+    const botReply = await cb._call(userMessage);
+    res.json({ message: botReply });
   } catch (error) {
     console.error(error);
     res.status(500).send("Error occurred while processing your message");

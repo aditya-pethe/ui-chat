@@ -15,10 +15,13 @@ describe("Chatbot", () => {
 
   // Example test: Check that the agent runs with a tool
   test("Check code tool usage", async () => {
-    const primaryPrompt = "Please write me a simple landing page for a personal website";
-    const secondaryPrompt = "Can you format it nicer? Use a better color palette and space things out better";
-    const jsPrompt = "Modify the javascript to have a simple animation on the page";
- 
+    const primaryPrompt =
+      "Please write me a simple landing page for a personal website";
+    const secondaryPrompt =
+      "Can you format it nicer? Use a better color palette and space things out better";
+    const jsPrompt =
+      "Modify the javascript to have a simple animation on the page";
+
     const response = await chatbot.run(jsPrompt);
     expect(typeof response.output).toBe("string");
   }, 120000);
