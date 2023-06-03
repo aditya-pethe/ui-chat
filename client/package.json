@@ -2,7 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:2000",
+  "proxy": "http://localhost:8080",
   "dependencies": {
     "@codemirror/lang-css": "^6.2.0",
     "@codemirror/lang-html": "^6.4.3",
