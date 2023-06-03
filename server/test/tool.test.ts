@@ -1,26 +1,26 @@
-import { CodePreviewTool } from "../src/ui-agent/tool";
-import { readCodeState, writeCodeFiles } from "../src/utils";
+import { CodePreviewTool } from '../src/ui-agent/tool'
+import { writeCodeFiles } from '../src/utils'
 
-describe("CodePreview", () => {
-  let codePreviewTool: CodePreviewTool;
+describe('CodePreview', () => {
+  let codePreviewTool: CodePreviewTool
 
   beforeEach(() => {
-    codePreviewTool = new CodePreviewTool();
-  });
+    codePreviewTool = new CodePreviewTool()
+  })
 
   afterEach(() => {
-    writeCodeFiles("", "", "");
-  });
+    writeCodeFiles('', '', '')
+  })
 
-  //Check that the call method return string
-  test("Call method returns a valid response", async () => {
-    const oldCode = readCodeState();
+  // Check that the call method return string
+  test('Call method returns a valid response', async () => {
+    // const oldCode = readCodeState()
     const response = await codePreviewTool.call(
-      "please write a simple landing page for a personal website"
-    );
-    const newCode = readCodeState();
+      'please write a simple landing page for a personal website'
+    )
+    // const newCode = readCodeState()
 
-    expect(typeof response).toBe("string");
+    expect(typeof response).toBe('string')
     // expect(oldCode).not.toEqual(newCode);
-  }, 120000);
-});
+  }, 120000)
+})

@@ -1,26 +1,24 @@
 import {
   ChatPromptTemplate,
   HumanMessagePromptTemplate,
-  BaseStringPromptTemplate,
-  PromptTemplate,
-  SystemMessagePromptTemplate,
-} from "langchain/prompts";
-import { StructuredOutputParser } from "langchain/output_parsers";
+  SystemMessagePromptTemplate
+} from 'langchain/prompts'
+import { StructuredOutputParser } from 'langchain/output_parsers'
 
 export const parser = StructuredOutputParser.fromNamesAndDescriptions({
-  html: "modified html code",
-  css: "modified css code",
-  js: "modified js code",
-});
+  html: 'modified html code',
+  css: 'modified css code',
+  js: 'modified js code'
+})
 
-const messagePrompt = new PromptTemplate({
-  template:
-    "Modify the code based on the users requests, and the existing code state.",
-  inputVariables: ["input", "html", "css", "js"],
-  partialVariables: { format_instructions: parser.getFormatInstructions() },
-});
+// const messagePrompt = new PromptTemplate({
+//   template:
+//     'Modify the code based on the users requests, and the existing code state.',
+//   inputVariables: ['input', 'html', 'css', 'js'],
+//   partialVariables: { format_instructions: parser.getFormatInstructions() }
+// })
 
-const humanChatMessage = new HumanMessagePromptTemplate(messagePrompt);
+// const humanChatMessage = new HumanMessagePromptTemplate(messagePrompt)
 
 const promptBuilder = ChatPromptTemplate.fromPromptMessages([
   SystemMessagePromptTemplate.fromTemplate(
@@ -48,13 +46,12 @@ const promptBuilder = ChatPromptTemplate.fromPromptMessages([
       
       wrap all code in 3 backticks, do not include any non-code in backticks
       `
-  ),
-  // humanChatMessage
-]);
+  )
+])
 
 promptBuilder.partialVariables = {
-  format_instructions: parser.getFormatInstructions(),
-};
-promptBuilder.outputParser = parser;
+  format_instructions: parser.getFormatInstructions()
+}
+promptBuilder.outputParser = parser
 
-export const uiChatPrompt = promptBuilder;
+export const uiChatPrompt = promptBuilder
