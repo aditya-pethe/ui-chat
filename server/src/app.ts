@@ -6,7 +6,7 @@ import { readCodeState, writeCodeFiles } from './utils'
 dotenv.config()
 
 const app = express()
-const port = 2000
+const port = process.env.PORT || 8080;
 // const apiKey = process.env.OPENAI_API_KEY
 
 const cb = new CodePreviewTool()
