@@ -11,7 +11,7 @@ const port = process.env.PORT ?? 8080
 // const apiKey = process.env.OPENAI_API_KEY
 // Serve static files from the React app
 
-const buildPath = '../../../client/build'
+const buildPath = '../../../build'
 
 app.use(express.static(path.join(__dirname, buildPath)))
 
