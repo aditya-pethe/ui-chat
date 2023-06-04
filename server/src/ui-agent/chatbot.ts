@@ -2,11 +2,11 @@
 import { ConversationChain } from 'langchain/chains'
 import { ChatOpenAI } from 'langchain/chat_models/openai'
 import {
-  type AgentExecutor,
+  AgentExecutor,
   initializeAgentExecutorWithOptions
 } from 'langchain/agents'
 import { BufferMemory } from 'langchain/memory'
-import { type Tool } from 'langchain/tools'
+import { Tool } from 'langchain/tools'
 import { CodePreviewTool } from './tool'
 import * as dotenv from 'dotenv'
 
