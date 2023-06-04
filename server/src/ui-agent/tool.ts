@@ -73,7 +73,7 @@ export class CodePreviewTool extends Tool {
     return obj
   }
 
-  async _call (input: string): Promise<string> {
+  async _call (input: string): Promise<any> {
     /*
     1. generate html css and js code given user input
     2. Write html css and js code to a file
@@ -97,8 +97,14 @@ export class CodePreviewTool extends Tool {
     const generation = (await res).generations[0][0].text
     // console.log(generation);
     const generatedCode = this.parseOutput(generation)
-    writeCodeFiles(generatedCode.html, generatedCode.css, generatedCode.js)
-
-    return 'I modified the code based on your requests - let me know if you have questions!'
+    // writeCodeFiles(generatedCode.html, generatedCode.css, generatedCode.js)
+    const botResponse = 'I modified the code based on your requests - let me know if you have questions!';
+    const output = {
+      html:generatedCode.html,
+      css:generatedCode.css,
+      js:generatedCode.js,
+      message:botResponse
+    }
+    return output;
   }
 }

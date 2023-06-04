@@ -1,0 +1,42 @@
+import { AsyncCaller, AsyncCallerParams } from "../../util/async_caller.js";
+import { BaseTracer, Run, BaseRun } from "./tracer.js";
+export interface RunCreate extends BaseRun {
+    child_runs: this[];
+    session_id: string;
+}
+export interface BaseTracerSession {
+    start_time: number;
+    name?: string;
+}
+export interface BaseTracerSessionV2 extends BaseTracerSession {
+    tenant_id: string;
+}
+export interface TracerSessionCreateV2 extends BaseTracerSessionV2 {
+    id?: string;
+}
+export interface TracerSession extends BaseTracerSessionV2 {
+    id: string;
+}
+export interface LangChainTracerFields {
+    exampleId?: string;
+    tenantId?: string;
+    sessionName?: string;
+    sessionExtra?: Record<string, unknown>;
+    callerParams?: AsyncCallerParams;
+}
+export declare class LangChainTracer extends BaseTracer implements LangChainTracerFields {
+    name: string;
+    protected endpoint: string;
+    protected headers: Record<string, string>;
+    sessionName: string;
+    sessionExtra?: LangChainTracerFields["sessionExtra"];
+    protected session: TracerSession;
+    exampleId?: string;
+    tenantId?: string;
+    caller: AsyncCaller;
+    constructor({ exampleId, tenantId, sessionName, sessionExtra, callerParams, }?: LangChainTracerFields);
+    protected ensureSession(): Promise<TracerSession>;
+    protected ensureTenantId(): Promise<string>;
+    private _convertToCreate;
+    protected persistRun(run: Run): Promise<void>;
+}

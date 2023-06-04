@@ -36,10 +36,12 @@
   
   .input-area {
     display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
     margin-top: auto;
     padding: 10px;
     border-top: 1px solid #ccc;
-  }
+  }  
   
   .input-field {
     flex-grow: 1;
@@ -49,6 +51,8 @@
     border: 1px solid #ccc;
     border-radius: 5px;
     resize: none; /* This prevents the user from resizing the textarea */
+    font-family: Arial, sans-serif;
+
   }
   
   button {
@@ -92,5 +96,20 @@
     100% {
       transform: rotate(360deg);
     }
+  }
+  
+
+  .api-key-field {
+    width: calc(100% - 58px);
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .message-input-area {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-bottom: 10px;
   }
   

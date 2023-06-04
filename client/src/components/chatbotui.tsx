@@ -9,7 +9,7 @@ interface Message {
 }
 
 interface ChatbotUIProps {
-  fetchAndUpdateCode: () => void;
+  fetchAndUpdateCode: (html:string,css:string,js:string) => void;
   htmlCode: string;
   cssCode: string;
   jsCode: string;
@@ -24,9 +24,15 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
   const [input, setInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [apiKey, setApiKey] = useState("");
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(event.target.value);
+  };
+
+  // Add a function to handle changes to the API key input
+  const handleApiKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setApiKey(event.target.value);
   };
 
   const handleSendMessage = async () => {
@@ -61,7 +67,7 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
         { sender: "bot", text: newMessage } as Message,
       ]);
 
-      fetchAndUpdateCode();
+      fetchAndUpdateCode(data.html, data.css, data.js);
       setIsLoading(false);
     }
   };
@@ -81,7 +87,8 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
       ))}
       {isLoading && <div className="loading"></div>}
       <div className="input-area">
-        <textarea
+      <div className="message-input-area">
+      <textarea
           value={input}
           onChange={handleInputChange}
           className="input-field"
@@ -89,6 +96,14 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
         <button onClick={handleSendMessage}>
           <FontAwesomeIcon icon={faPaperPlane} size="lg" />
         </button>
+      </div>
+        <input
+          type="password"
+          value={apiKey}
+          onChange={handleApiKeyChange}
+          className="api-key-field"
+          placeholder="Enter OpenAI API key"
+        />
       </div>
     </div>
   );

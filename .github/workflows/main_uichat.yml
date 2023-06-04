@@ -23,14 +23,6 @@ jobs:
         with:
           node-version: '18.x'
 
-      - name: npm install (Server)
-        run: npm install
-
-      - name: npm install (Client)
-        run: |
-          cd client
-          npm install
-
       - name: npm build and test
         run: |
           npm run build --if-present

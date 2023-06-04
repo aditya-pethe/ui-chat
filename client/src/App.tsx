@@ -1,4 +1,4 @@
-import {useState } from "react";
+import {useEffect, useState } from "react";
 import Chatbot from "./components/chatbotui";
 import { exampleHtml, exampleCss, exampleJs } from "./example-code/examples";
 import Editor from "./components/editor";
@@ -11,45 +11,33 @@ function App() {
   const [cssCode, setCssCode] = useState<string>(exampleCss);
   const [jsCode, setJsCode] = useState<string>(exampleJs);
   const [activeTab, setActiveTab] = useState<"code" | "preview">("preview");
+  const [srcDoc, setSrcDoc] = useState("");
 
-  const fetchCode = async () => {
-    try {
-      const response = await fetch(`/code`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error(`Failed to fetch code:`, error);
-    }
-  };
-
-  const fetchAndUpdateCode = async () => {
+  const fetchAndUpdateCode = async (html:string, css:string, js:string) => {
     // fetch code and update state
-    const { html, css, js } = await fetchCode();
     setHtmlCode(html || "");
     setCssCode(css || "");
     setJsCode(js || "");
   };
 
-  const wrappedJsCode = `
-  document.addEventListener('DOMContentLoaded', (event) => {
-      ${jsCode}
-  });
-  `;
 
-  const srcDoc = `
-  <html>
-    <head>
-      <style>${cssCode}</style>
-      <script>${wrappedJsCode}</script>
-    </head>
-    <body>${htmlCode}</body>
-  </html>
-  `;
+  useEffect(() => {
+    const wrappedJsCode = `
+      document.addEventListener('DOMContentLoaded', (event) => {
+          ${jsCode}
+      });
+    `;
+
+    setSrcDoc(`
+      <html>
+        <head>
+          <style>${cssCode}</style>
+          <script>${wrappedJsCode}</script>
+        </head>
+        <body>${htmlCode}</body>
+      </html>
+    `);
+  }, [htmlCode, cssCode, jsCode]);
 
   return (
     <div className="app-container">
