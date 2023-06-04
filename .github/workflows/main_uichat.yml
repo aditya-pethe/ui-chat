@@ -45,9 +45,8 @@ jobs:
           npm run build
           npm run test
 
-      - name: npm prune and deploy
+      - name: npm deploy
         run: |
-          npm prune --production
           npm run deploy
           
       - name: Upload artifact for deployment job
