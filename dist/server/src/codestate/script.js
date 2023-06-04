@@ -1,6 +1,3 @@
 
-document.getElementById('darkModeToggle').addEventListener('change', function() {
-    document.body.classList.toggle('dark-mode');
-    document.querySelector('.container').classList.toggle('dark-mode');
-    document.querySelector('.project-card').classList.toggle('dark-mode');
-});
+// This is a simple page, so no JavaScript is needed at the moment. 
+// But you can add interactivity here if needed in the future.

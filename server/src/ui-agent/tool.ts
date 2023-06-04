@@ -2,7 +2,7 @@ import {
   Tool
 } from 'langchain/tools'
 import { ChatOpenAI } from 'langchain/chat_models/openai'
-import { readCodeState, writeCodeFiles } from '../utils'
+import { readCodeState } from '../utils'
 import { uiChatPrompt } from './prompt'
 import * as dotenv from 'dotenv'
 // import { LLMChain } from 'langchain/chains'
@@ -98,13 +98,13 @@ export class CodePreviewTool extends Tool {
     // console.log(generation);
     const generatedCode = this.parseOutput(generation)
     // writeCodeFiles(generatedCode.html, generatedCode.css, generatedCode.js)
-    const botResponse = 'I modified the code based on your requests - let me know if you have questions!';
+    const botResponse = 'I modified the code based on your requests - let me know if you have questions!'
     const output = {
-      html:generatedCode.html,
-      css:generatedCode.css,
-      js:generatedCode.js,
-      message:botResponse
+      html: generatedCode.html,
+      css: generatedCode.css,
+      js: generatedCode.js,
+      message: botResponse
     }
-    return output;
+    return output
   }
 }

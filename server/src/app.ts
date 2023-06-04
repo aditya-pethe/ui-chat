@@ -1,24 +1,23 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import { CodePreviewTool } from './ui-agent/tool'
-import { readCodeState, writeCodeFiles } from './utils'
-import path from "path";
+import { writeCodeFiles } from './utils'
+import path from 'path'
 
 dotenv.config()
 
 const app = express()
-const port = process.env.PORT || 8080;
+const port = process.env.PORT ?? 8080
 // const apiKey = process.env.OPENAI_API_KEY
 // Serve static files from the React app
 
-const buildPath = "../../../client/build";
+const buildPath = '../../../client/build'
 
-app.use(express.static(path.join(__dirname, buildPath)));
-
+app.use(express.static(path.join(__dirname, buildPath)))
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, buildPath, '/index.html'));
-});
+  res.sendFile(path.join(__dirname, buildPath, '/index.html'))
+})
 
 const cb = new CodePreviewTool()
 app.use(express.json()) // for parsing application/json
@@ -33,7 +32,7 @@ app.post('/chat', async (req, res) => {
 
   try {
     const botResponse = await cb._call(userMessage)
-    res.json(botResponse);
+    res.json(botResponse)
   } catch (error) {
     console.error(error)
     res.status(500).send('Error occurred while processing your message')

@@ -10,10 +10,10 @@ const utils_1 = require("./utils");
 const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
-const port = process.env.PORT || 8080;
+const port = process.env.PORT ?? 8080;
 // const apiKey = process.env.OPENAI_API_KEY
 // Serve static files from the React app
-const buildPath = "../../../client/build";
+const buildPath = '../../../client/build';
 app.use(express_1.default.static(path_1.default.join(__dirname, buildPath)));
 app.get('*', (req, res) => {
     res.sendFile(path_1.default.join(__dirname, buildPath, '/index.html'));
