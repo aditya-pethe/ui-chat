@@ -76,6 +76,6 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2A0A1536E74A47EC926984B802AF10BD }}
           package: .
-          app_command_line: 'node dist/server/src/app.js'
+          startup-command: 'node dist/server/src/app.js'
 
 
