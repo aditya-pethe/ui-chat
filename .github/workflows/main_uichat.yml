@@ -23,11 +23,28 @@ jobs:
         with:
           node-version: '18.x'
 
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.OS }}-build-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.OS }}-build-
+            ${{ runner.OS }}-
+
+      - name: npm install (Server)
+        run: npm install
+
+      - name: npm install (Client)
+        run: |
+          cd client
+          npm install
+
       - name: npm build and test
         run: |
           npm run build --if-present
           npm run test --if-present
-
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
         with:
@@ -55,3 +72,4 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2A0A1536E74A47EC926984B802AF10BD }}
           package: .
+
