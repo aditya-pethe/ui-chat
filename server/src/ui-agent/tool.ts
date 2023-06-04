@@ -50,16 +50,13 @@ export class CodePreviewTool extends Tool {
     now result is -
     [\n,code,\n,code,\n,code]
      */
-    const htmlCode = result[1]
-      .replace(extraChars, '')
+    const htmlCode = result[1]?.replace(extraChars, '')
       .trimStart()
       .replace(/^\s*:/, '')
-    const cssCode = result[3]
-      .replace(extraChars, '')
+    const cssCode = result[3]?.replace(extraChars, '')
       .trimStart()
       .replace(/^\s*:/, '')
-    const jsCode = result[5]
-      .replace(extraChars, '')
+    const jsCode = result[5]?.replace(extraChars, '')
       .trimStart()
       .replace(/^\s*:/, '')
 
