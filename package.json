@@ -4,9 +4,9 @@
   "description": "An natural language interface for frontend development",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build:server && node dist/server/src/app.js",
+    "start": "node deploy/dist/server/src/app.js",
     "build:client": "cd client && npm run build",
-    "build:server": "tsc && ncp server/src/codestate dist/server/src/codestate",
+    "build:server": "npx tsc && ncp server/src/codestate dist/server/src/codestate",
     "build": "npm run build:client && npm run build:server",
     "dev:client": "cd client && npm start",
     "dev:server": "cd server && npm run dev",
@@ -14,7 +14,8 @@
     "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
     "format": "prettier --write '*/**/*.{ts,tsx}'",
     "test": "jest",
-    "test:server": "jest server"
+    "test:server": "jest server",
+    "deploy": "mkdir -p deploy && cp -r dist client/build node_modules deploy/"
   },
   "repository": {
     "type": "git",
