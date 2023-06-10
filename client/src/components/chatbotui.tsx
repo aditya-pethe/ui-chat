@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./chatbotui.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPaperPlane } from "@fortawesome/free-solid-svg-icons";
+import TextInput from "./textinput"
+// import ApiKeyInput from "./apikeyinput"
 
 interface Message {
   sender: "user" | "bot";
@@ -15,6 +15,13 @@ interface ChatbotUIProps {
   jsCode: string;
 }
 
+const startMessage: Message = {
+  sender:"bot",
+  text:`Welcome to UI-chat! To get started, describe a website you'd like to build, and I'll modify the code accordingly.
+  
+  Try "create a personal website with a dark mode button", or "create an imitation site of google". I'll try and be quick, but response times can take up to 2 minutes. Have fun!`
+}
+
 const Chatbot: React.FC<ChatbotUIProps> = ({
   fetchAndUpdateCode,
   htmlCode,
@@ -22,17 +29,14 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
   jsCode,
 }) => {
   const [input, setInput] = useState("");
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([startMessage]);  
   const [isLoading, setIsLoading] = useState(false);
-  const [apiKey, setApiKey] = useState("");
+  // const [isApiKeyValid, setIsApiKeyValid] = useState(true);
+  // const [apiKey, setApiKey] = useState("");
+
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(event.target.value);
-  };
-
-  // Add a function to handle changes to the API key input
-  const handleApiKeyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setApiKey(event.target.value);
   };
 
   const handleSendMessage = async () => {
@@ -45,13 +49,23 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
       const clientCode = { html: htmlCode, css: cssCode, js: jsCode };
       const startTime = Date.now();
 
+      // get server response
       const response = await fetch("/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: userMessage.text, code: clientCode }),
+        body: JSON.stringify({ message: userMessage.text, code: clientCode}),
       });
+
+      if(response.status!==200){
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { sender: "bot", text: "I'm sorry, there was an error processing your request" } as Message,
+        ]);
+        setIsLoading(false);
+        return;
+      }
 
       const endTime = Date.now();
 
@@ -59,7 +73,7 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
       console.log(data.message);
 
       const timeElapsed = (endTime - startTime) / 1000;
-      const newMessage = `${data.message}. Time elapsed: ${timeElapsed} seconds`;
+      const newMessage = `${data.message} Time elapsed: ${timeElapsed} seconds`;
 
       // After the response from the server is received, add the bot's message
       setMessages((prevMessages) => [
@@ -87,23 +101,18 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
       ))}
       {isLoading && <div className="loading"></div>}
       <div className="input-area">
-      <div className="message-input-area">
-      <textarea
-          value={input}
-          onChange={handleInputChange}
-          className="input-field"
-        />
-        <button onClick={handleSendMessage}>
-          <FontAwesomeIcon icon={faPaperPlane} size="lg" />
-        </button>
-      </div>
-        <input
-          type="password"
-          value={apiKey}
-          onChange={handleApiKeyChange}
-          className="api-key-field"
-          placeholder="Enter OpenAI API key"
-        />
+      <TextInput
+        input={input}
+        handleInputChange={handleInputChange}
+        handleSendMessage={handleSendMessage}
+        isApiKeyValid={true}
+      />
+      {/* <ApiKeyInput
+        apiKey={apiKey}
+        isApiKeyValid={isApiKeyValid}
+        setApiKey={setApiKey}
+        setIsApiKeyValid={setIsApiKeyValid}
+      /> */}
       </div>
     </div>
   );

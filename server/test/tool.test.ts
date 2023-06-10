@@ -1,11 +1,13 @@
 import { CodePreviewTool } from '../src/ui-agent/tool'
 import { writeCodeFiles } from '../src/utils'
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const apiKey = process.env.OPENAI_API_KEY!
 
 describe('CodePreview', () => {
   let codePreviewTool: CodePreviewTool
 
   beforeEach(() => {
-    codePreviewTool = new CodePreviewTool()
+    codePreviewTool = new CodePreviewTool(apiKey)
   })
 
   afterEach(() => {
