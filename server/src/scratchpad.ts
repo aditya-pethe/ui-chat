@@ -1,8 +1,9 @@
 // file for testing other modules in a not formalized / diagnositic way
 import { CodePreviewTool } from './ui-agent/tool'
-
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const apiKey = process.env.OPENAI_API_KEY!
 // tool testing
-const cp = new CodePreviewTool()
+const cp = new CodePreviewTool(apiKey)
 const primaryPrompt =
   'Please write me a simple landing page for a personal website'
 // const secondaryPrompt =
@@ -15,6 +16,7 @@ async function testCodePreview (): Promise<void> {
   console.log(res)
   console.timeEnd('CodePreviewTool Execution Time') // End timer and print the duration
 }
+
 /*
 Normal Execution: 1:27.420
 No file I/O and parser: 43.983s

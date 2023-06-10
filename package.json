@@ -9,7 +9,7 @@
     "build:server": "npx tsc && ncp server/src/codestate dist/server/src/codestate",
     "build": "npm run build:client && npm run build:server",
     "dev:client": "cd client && npm start",
-    "dev:server": "cd server && npm run dev",
+    "dev:server": "npm run build:server && node dist/server/src/app.js",
     "dev": "concurrently \"npm run dev:client\" \"npm run dev:server\"",
     "lint": "eslint '*/**/*.{ts,tsx}' --quiet --fix",
     "format": "prettier --write '*/**/*.{ts,tsx}'",

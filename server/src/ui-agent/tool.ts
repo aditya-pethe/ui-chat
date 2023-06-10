@@ -22,14 +22,14 @@ export class CodePreviewTool extends Tool {
   private readonly chat: ChatOpenAI
   // private outputParser: OutputFixingParser<{ [x: string]: string; }>;
 
-  constructor () {
+  constructor (key: string) {
     super()
     const code = readCodeState()
     this.html = code.html
     this.css = code.css
     this.js = code.js
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.apiKey = process.env.OPENAI_API_KEY!
+    this.apiKey = key
     this.chat = new ChatOpenAI({
       openAIApiKey: this.apiKey,
       temperature: 0,
@@ -95,7 +95,7 @@ export class CodePreviewTool extends Tool {
     // console.log(generation);
     const generatedCode = this.parseOutput(generation)
     // writeCodeFiles(generatedCode.html, generatedCode.css, generatedCode.js)
-    const botResponse = 'I modified the code based on your requests - let me know if you have questions!'
+    const botResponse = 'I modified the code based on your requests!'
     const output = {
       html: generatedCode.html,
       css: generatedCode.css,

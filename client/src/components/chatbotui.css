@@ -27,11 +27,13 @@
     border-radius: 10px;
     width: fit-content;
     margin-bottom: 10px;
+    white-space: pre-line
   }
   
   .messages {
     flex-grow: 1;
     overflow-y: auto;
+    white-space: pre-wrap
   }
   
   .input-area {
@@ -113,3 +115,9 @@
     padding-bottom: 10px;
   }
   
+  .lock-button {
+    /* display:flex */
+    position: relative;
+
+    right:2px;
+  }
