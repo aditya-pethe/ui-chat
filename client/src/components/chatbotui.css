@@ -31,13 +31,17 @@
     white-space: pre-line;
   }
   */
+
+  /* eslint-disable*/
   .bubble {
     --r: 25px; /* the radius */
     --t: 30px; /* the size of the tail */
     max-width: 300px;
     padding: calc(2*var(--r)/3);
     -webkit-mask: 
-      radial-gradient(var(--t) at var(--_d) 0,#0000 98%,#000 102%) 
+      radial-gradient(
+        var(--t) at var(--_d) 0,#0000 98%,#000 102%
+        ) 
         var(--_d) 100%/calc(100% - var(--r)) var(--t) no-repeat,
       conic-gradient(at var(--r) var(--r),#000 75%,#0000 0) 
         calc(var(--r)/-2) calc(var(--r)/-2) padding-box, 
@@ -47,6 +51,7 @@
     width: fit-content;
     margin-bottom: 10px;
   }
+  /* eslint-enable */
   
   .userMessage {
     --_d: 100%;
