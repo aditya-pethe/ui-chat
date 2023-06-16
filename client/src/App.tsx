@@ -2,13 +2,10 @@ import {useEffect, useState } from "react";
 import Chatbot from "./components/chatbotui";
 import { exampleHtml, exampleCss, exampleJs } from "./example-code/examples";
 import Editor from "./components/editor";
-import Tabs from "./components/tabs"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
+import Tabs from "./components/tabs";
 
 import "./App.css"; // Importing the CSS file
 import "./components/chatbotui.css";
-import tabs from "./components/tabs";
 
 function App() {
   const [htmlCode, setHtmlCode] = useState<string>(exampleHtml);
