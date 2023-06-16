@@ -10,6 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
+      CI: ""
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
       AZURE_INSTRUMENTATION_KEY: ${{ secrets.AZURE_INSTRUMENTATION_KEY }}
 
