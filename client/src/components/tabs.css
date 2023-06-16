@@ -24,8 +24,9 @@
   }
   
   .tab-icon {
-    margin-left: 34em;;
-    margin-top: 1rem;
+    position: absolute;
+    top: 0.5em;
+    right: 1em;
     color: #333;
     cursor: pointer;
     font-size: 30px;
