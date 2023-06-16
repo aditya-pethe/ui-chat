@@ -1,5 +1,5 @@
 import { CodePreviewTool } from '../src/ui-agent/tool'
-import { writeCodeFiles } from '../src/utils'
+import { writeCodeFiles, readCodeState } from '../src/utils'
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const apiKey = process.env.OPENAI_API_KEY!
 
@@ -16,9 +16,10 @@ describe('CodePreview', () => {
 
   // Check that the call method return string
   test('Call method returns a valid response', async () => {
-    // const oldCode = readCodeState()
+    const oldCode = readCodeState()
     const response = await codePreviewTool._call(
-      'please write a simple landing page for a personal website'
+      ['Make a personal website with a light theme', 'now add a dark mode slider'],
+      oldCode
     )
     // const newCode = readCodeState()
 

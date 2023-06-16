@@ -42,6 +42,19 @@ export class CodePreviewTool extends Tool {
     // )
   }
 
+  formatMessages (userMessages: string[]): string {
+    let result = ''
+    const n: number = userMessages.length
+    if (n > 1) {
+      for (let i = 0; i < n - 1; i++) {
+        result += `message ${i + 1}: ${userMessages[i]} \n`
+      }
+    }
+
+    result += `last message: ${userMessages[n - 1]}`
+    return result
+  }
+
   parseOutput (raw: string): any {
     const cleaned = raw.replace(/\s*(html:|css:|js:)\s*/, '\n')
     const result = cleaned.split('```')
@@ -70,21 +83,21 @@ export class CodePreviewTool extends Tool {
     return obj
   }
 
-  async _call (input: string): Promise<any> {
+  async _call (input: string[], code: any): Promise<any> {
     /*
     1. generate html css and js code given user input
     2. Write html css and js code to a file
     */
-    const code = readCodeState()
     this.html = code.html
     this.css = code.css
     this.js = code.js
 
+    const formattedInput = this.formatMessages(input)
     console.log(input)
 
     const res = this.chat.generatePrompt([
       await uiChatPrompt.formatPromptValue({
-        input: input,
+        input: formattedInput,
         html: this.html,
         css: this.css,
         js: this.js
