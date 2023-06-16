@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      AZURE_INSTRUMENTATION_KEY: ${{ secrets.AZURE_INSTRUMENTATION_KEY }}
 
     steps:
       - uses: actions/checkout@v2

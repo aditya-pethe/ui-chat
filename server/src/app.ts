@@ -1,27 +1,31 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import { CodePreviewTool } from './ui-agent/tool'
-import { writeCodeFiles } from './utils'
 import path from 'path'
+import * as appInsights from 'applicationinsights'
 
 dotenv.config()
 
+// azure insights logging config
+appInsights.setup(process.env.AZURE_INSTRUMENTATION_KEY).start()
+const azClient = appInsights.defaultClient
+
+// server init and config
 const app = express()
 const port = process.env.PORT ?? 8080
 let apiKey = ''
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 let cb = new CodePreviewTool(process.env.OPENAI_API_KEY!)
+
 // Serve static files from the React app
-
 const buildPath = '../../../build'
-
 app.use(express.static(path.join(__dirname, buildPath)))
+
+app.use(express.json())
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, buildPath, '/index.html'))
 })
-
-app.use(express.json()) // for parsing application/json
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.post('/key', async (req, res) => {
@@ -42,19 +46,33 @@ app.post('/key', async (req, res) => {
 
 // eslint-disable-next-line @typescript-eslint/no-misused-promises
 app.post('/chat', async (req, res) => {
-  const userMessage = req.body.message
+  const userMessages = req.body.messages
   const code = req.body.code
-
-  // write client state to disk
-  writeCodeFiles(code.html, code.css, code.js)
+  const startTime = Date.now()
+  let botResponse = null
 
   try {
-    const botResponse = await cb._call(userMessage)
+    botResponse = await cb._call(userMessages, code)
     res.json(botResponse)
   } catch (error) {
     console.error(error)
-    res.status(500).send('Error occurred while processing your message')
+    if (error instanceof Error) {
+      azClient.trackException({ exception: error })
+    }
+    res.status(500).send()
   }
+
+  const endTime = Date.now()
+  const timeElapsed = (endTime - startTime) / 1000
+
+  azClient.trackTrace({
+    message: 'Chat post request processed',
+    properties: { // Custom properties
+      userId: req.ip,
+      userMessage: userMessages.pop(),
+      responseTime: `${timeElapsed}`
+    }
+  })
 })
 
 app.listen(port, () => {

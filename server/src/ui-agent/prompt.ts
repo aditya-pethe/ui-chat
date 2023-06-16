@@ -18,8 +18,6 @@ export const parser = StructuredOutputParser.fromNamesAndDescriptions({
 //   partialVariables: { format_instructions: parser.getFormatInstructions() }
 // })
 
-// const humanChatMessage = new HumanMessagePromptTemplate(messagePrompt)
-
 const promptBuilder = ChatPromptTemplate.fromPromptMessages([
   SystemMessagePromptTemplate.fromTemplate(
     `You are a UI design assistant which writes and edits html, css, and js code based on user requests.
@@ -27,8 +25,10 @@ const promptBuilder = ChatPromptTemplate.fromPromptMessages([
       carefully fulfilling user requests. Given user input, and the existing state of the code files, you will rewrite the code.`
   ),
   HumanMessagePromptTemplate.fromTemplate(
-    `Modify the code based on the users requests, and the existing code state.
-      user input: {input}
+    `Modify the code based on the users most recent requests, and the existing code state.
+
+      user input: 
+      {input}
       html: {html}
       css: {css}
       js: {js}
@@ -49,9 +49,9 @@ const promptBuilder = ChatPromptTemplate.fromPromptMessages([
   )
 ])
 
-promptBuilder.partialVariables = {
-  format_instructions: parser.getFormatInstructions()
-}
-promptBuilder.outputParser = parser
+// promptBuilder.partialVariables = {
+//   format_instructions: parser.getFormatInstructions()
+// }
+// promptBuilder.outputParser = parser
 
 export const uiChatPrompt = promptBuilder

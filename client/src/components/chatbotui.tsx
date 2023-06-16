@@ -17,9 +17,11 @@ interface ChatbotUIProps {
 
 const startMessage: Message = {
   sender:"bot",
-  text:`Welcome to UI-chat! To get started, describe a website you'd like to build, and I'll modify the code accordingly.
+  text:`Hello 👋 welcome to UI-chat! To get started, describe a website you'd like to build, and I'll modify the code accordingly.
   
-  Try "create a personal website with a dark mode button", or "create an imitation site of google". I'll try and be quick, but response times can take up to 2 minutes. Have fun!`
+  Try "create a personal website with a dark mode button", or "create an imitation site of google." The more detailed your prompt, the better the output will be.
+  
+  I'll try and be quick, but response times can take up to 2 minutes. Have fun!`
 }
 
 const Chatbot: React.FC<ChatbotUIProps> = ({
@@ -33,7 +35,7 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
   const [isLoading, setIsLoading] = useState(false);
   // const [isApiKeyValid, setIsApiKeyValid] = useState(true);
   // const [apiKey, setApiKey] = useState("");
-
+  let userMessageList: Array<string>= [];
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(event.target.value);
@@ -42,20 +44,21 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
   const handleSendMessage = async () => {
     if (input.trim() !== "") {
       const userMessage: Message = { sender: "user", text: input.trim() }; // Add : Message here
+      userMessageList.push(userMessage.text);
       setMessages([...messages, userMessage]);
       setInput("");
       setIsLoading(true);
 
       const clientCode = { html: htmlCode, css: cssCode, js: jsCode };
       const startTime = Date.now();
-
+      console.log(userMessageList)
       // get server response
       const response = await fetch("/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ message: userMessage.text, code: clientCode}),
+        body: JSON.stringify({ messages: userMessageList, code: clientCode}),
       });
 
       if(response.status!==200){
@@ -91,15 +94,18 @@ const Chatbot: React.FC<ChatbotUIProps> = ({
 
   return (
     <div className="chatbot-container">
-      {messages.map((message, index) => (
-        <div
-          key={index}
-          className={message.sender === "user" ? "userMessage" : "botMessage"}
-        >
-          {message.text}
-        </div>
-      ))}
-      {isLoading && <div className="loading"></div>}
+      <div className="message-area">
+        {messages.map((message, index) => (
+          <div
+            key={index}
+            className={message.sender === "user" ? "userMessage bubble" : "botMessage bubble"}
+          >
+            {message.text}
+          </div>
+        ))}
+        {isLoading && <div className="loading"></div>}
+      </div>
+      
       <div className="input-area">
       <TextInput
         input={input}

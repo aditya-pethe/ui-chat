@@ -3,3 +3,4 @@ node_modules/
 deploy/
 dist/
 build/
+.ds_store

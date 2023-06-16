@@ -4,11 +4,12 @@
     height: 100%;
   }
 
+
   .chatbotContainer .inputArea textarea {
     font-size: 20px;  /* adjust to your preference */
     /* other styles as before */
   }
-
+/*
   .userMessage {
     margin-left: auto;
     background-color: #008080;
@@ -21,19 +22,61 @@
 
   .botMessage {
     margin-right: auto;
-    background-color: #D3D3D3; /* Light gray, adjust as desired */
+    background-color: #dfdfdf; 
     color: black;
     padding: 10px;
     border-radius: 10px;
     width: fit-content;
     margin-bottom: 10px;
-    white-space: pre-line
+    white-space: pre-line;
+  }
+  */
+  .bubble {
+    --r: 25px; /* the radius */
+    --t: 30px; /* the size of the tail */
+    max-width: 300px;
+    padding: calc(2*var(--r)/3);
+    -webkit-mask: 
+      radial-gradient(var(--t) at var(--_d) 0,#0000 98%,#000 102%) 
+        var(--_d) 100%/calc(100% - var(--r)) var(--t) no-repeat,
+      conic-gradient(at var(--r) var(--r),#000 75%,#0000 0) 
+        calc(var(--r)/-2) calc(var(--r)/-2) padding-box, 
+      radial-gradient(50% 50%,#000 98%,#0000 101%) 
+        0 0/var(--r) var(--r) space padding-box;
+    color: #fff;
+    width: fit-content;
+    margin-bottom: 10px;
   }
   
+  .userMessage {
+    --_d: 100%;
+    border-right: var(--t) solid #0000;
+    margin-left: var(--t);
+    place-self: end;
+    background: teal;
+  }
+  
+  .botMessage {
+    --_d: 0%;
+    border-left: var(--t) solid #0000;
+    margin-right: var(--t);
+    place-self: start;
+    background: #dfdfdf;
+    color: black;
+    white-space: pre-line;
+  }
+
   .messages {
     flex-grow: 1;
     overflow-y: auto;
     white-space: pre-wrap
+  }
+
+  .message-area {
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
   }
   
   .input-area {

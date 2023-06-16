@@ -1,0 +1,38 @@
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .tabs button {
+    padding: 10px 20px;
+    border: none;
+    border-bottom: 2px solid transparent;
+    background: none;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .tabs button.active {
+    border-bottom: 2px solid #333;
+  }
+  
+  .tabs button:hover {
+    border-bottom: 2px solid teal;
+    color:teal
+  }
+  
+  .tab-icon {
+    margin-left: 34em;;
+    margin-top: 1rem;
+    color: #333;
+    cursor: pointer;
+    font-size: 30px;
+    align-self: center;
+}
+
+.tab-icon:hover {
+    color: teal;
+}
+

@@ -6,6 +6,7 @@ import { javascript } from "@codemirror/lang-javascript";
 import CodeMirror from "@uiw/react-codemirror";
 // import "./editor.css";
 import "../App.css";
+import "./editor.css";
 
 interface EditorProps {
   language: "html" | "css" | "js";
