@@ -1,7 +1,8 @@
+<p align="center">
+  <img src="https://github.com/aditya-pethe/ui-chat/assets/50645024/c0f3f1a0-013d-431e-8d34-eaa26e0d642a" alt="uichatlogouichatlogo">
 
 
-# ui-chat
-![uichatlogouichatlogo](https://github.com/aditya-pethe/ui-chat/assets/50645024/c0f3f1a0-013d-431e-8d34-eaa26e0d642a)
+# About
 
 [![try_it_out](https://img.shields.io/badge/try_it_out-teal.svg)](https://uichat.azurewebsites.net/)
 [![langchain.js](https://img.shields.io/badge/langchain.js-navy.svg)]([https://uichat.azurewebsites.net/](https://js.langchain.com/docs/))
