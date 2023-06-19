@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://github.com/aditya-pethe/ui-chat/assets/50645024/c0f3f1a0-013d-431e-8d34-eaa26e0d642a" alt="uichatlogouichatlogo">
+  <img src="https://github.com/aditya-pethe/ui-chat/assets/50645024/c0f3f1a0-013d-431e-8d34-eaa26e0d642a" alt="uichatlogouichatlogo"  width="400" height="200">
 
 
 # About
