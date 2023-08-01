@@ -6,9 +6,13 @@ import * as appInsights from 'applicationinsights'
 
 dotenv.config()
 
+let azClient:any = null
+
 // azure insights logging config
-appInsights.setup(process.env.AZURE_INSTRUMENTATION_KEY).start()
-const azClient = appInsights.defaultClient
+if(process.env.AZURE_INSTRUMENTATION_KEY) {
+  appInsights.setup(process.env.AZURE_INSTRUMENTATION_KEY).start()
+  azClient = appInsights.defaultClient
+}
 
 // server init and config
 const app = express()
@@ -56,7 +60,7 @@ app.post('/chat', async (req, res) => {
     res.json(botResponse)
   } catch (error) {
     console.error(error)
-    if (error instanceof Error) {
+    if (error instanceof Error && azClient) {
       azClient.trackException({ exception: error })
     }
     res.status(500).send()
@@ -65,14 +69,16 @@ app.post('/chat', async (req, res) => {
   const endTime = Date.now()
   const timeElapsed = (endTime - startTime) / 1000
 
-  azClient.trackTrace({
-    message: 'Chat post request processed',
-    properties: { // Custom properties
-      userId: req.ip,
-      userMessage: userMessages.pop(),
-      responseTime: `${timeElapsed}`
-    }
-  })
+  if(azClient) {
+    azClient.trackTrace({
+      message: 'Chat post request processed',
+      properties: { // Custom properties
+        userId: req.ip,
+        userMessage: userMessages.pop(),
+        responseTime: `${timeElapsed}`
+      }
+    })
+  }
 })
 
 app.listen(port, () => {
